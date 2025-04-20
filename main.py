@@ -33,12 +33,16 @@ statuses = {
     "dnd": "Really busy, won't respond.",
     "offline": "Sleeping or just gone",
 }
+correct = {"do_not_disturb": "dnd", "invisible": "offline"}
 
 
 async def get_state():
     global statuses
     return json.dumps(
-        {"status": str(bot.status).capitalize(), "means": statuses[str(bot.status)]},
+        {
+            "status": correct.get(str(bot.status), bot.status).capitalize(),
+            "means": statuses[correct.get(str(bot.status), bot.status)],
+        },
         indent=2,
     )
 
